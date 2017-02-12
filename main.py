@@ -13,6 +13,22 @@ parser.add_argument("port", type=int,
 
 
 args = parser.parse_args()
+port = args.port
+ip = args.ip
+
+
+
+# todo:
+# verbinden mit übergebener IP
+# joinnachrichten senden, um netz zu erkunden und x=5? nachbarn zu finden
+# (joinantworten auswerten)
+# nachricht senden = fluten
+# nachricht erhalten & weiterleiten
+
+
+firstsocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+firstsocket.bind((ip, port))
+
 
 
 
