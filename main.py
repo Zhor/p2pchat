@@ -20,7 +20,7 @@ ip = args.ip
 
 # todo:
 # verbinden mit übergebener IP
-# joinnachrichten senden, um netz zu erkunden und x=5? nachbarn zu finden
+# joinnachrichten senden, um netz zu erkunden und x=3? nachbarn zu finden
 # (joinantworten auswerten)
 # nachricht senden = fluten
 # nachricht erhalten & weiterleiten
@@ -29,8 +29,30 @@ ip = args.ip
 firstsocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 firstsocket.bind((ip, port))
 
+#Nachricht senden
+def sendMessage(self, message):
+    totalsent = 0
+    while totalsent < MSGLEN:
+        sent = self.sock.send(message[totalsent:])
+        if sent == 0:
+            raise RuntimeError("Fehler")
+        totalsent = totalsent + sent
 
 
+#Nachricht empfangen
+def receiveMessage(self):
+    chunks = []
+    bytes_recd = 0
+    while bytes_recd < MSGLEN:
+        chunk = self.sock.recv(min(MSGLEN - bytes_recd, 2048))
+        if chunk == '':
+            raise RuntimeError("Fehler")
+        chunks.append(chunk)
+        bytes_recd = bytes_recd + len(chunk)
+    return ''.join(chunks)
+
+#erhalten Nachrichten weiterleiten
+def reSendMessage(self, message)
 
 #just testing - ignore
 def threaded_client(conn):
