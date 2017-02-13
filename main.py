@@ -2,11 +2,12 @@
 import socket
 import sys
 from _thread import *
+from pyp2p.net import *
 
 import argparse
 
 parser = argparse.ArgumentParser(description="verbindet dich mit einem p2p chat.")
-parser.add_argument("ip", type=int,
+parser.add_argument("ip", type=str,
                     help="bootstrap IP")
 parser.add_argument("port", type=int,
                     help="bootstrap port")
@@ -26,8 +27,10 @@ ip = args.ip
 # nachricht erhalten & weiterleiten
 
 
-firstsocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-firstsocket.bind((ip, port))
+startsocket = Net(passive_bind=ip, passive_port=port, interface="eth0:1", node_type="passive", debug=1)
+startsocket.start()
+startsocket.bootstrap()
+startsocket.advertise()
 
 #Nachricht senden
 def sendMessage(self, message):
@@ -52,7 +55,8 @@ def receiveMessage(self):
     return ''.join(chunks)
 
 #erhalten Nachrichten weiterleiten
-def reSendMessage(self, message)
+def reSendMessage(self, message):
+    print ""
 
 #just testing - ignore
 def threaded_client(conn):
